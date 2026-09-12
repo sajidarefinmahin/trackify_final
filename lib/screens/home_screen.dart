@@ -48,3 +48,33 @@ class HomeScreen extends StatelessWidget {
       case 'Shopping':
         return Icons.shopping_bag;
       case 'Bills':
+        return Icons.receipt_long;
+      case 'Entertainment':
+        return Icons.movie;
+      case 'Health':
+        return Icons.health_and_safety;
+      case 'Education':
+        return Icons.school;
+      default:
+        return Icons.category;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+        title: const Text('Home'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.bar_chart),
+            tooltip: 'Statistics',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => StatisticsScreen(
+                    expenses: expenses,
