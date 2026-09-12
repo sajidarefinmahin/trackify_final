@@ -33,3 +33,19 @@ class Expense {
       }
     } else {
       parsedDate = DateTime.now();
+    }
+
+    return Expense(
+      amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
+      category: json['category'] as String? ?? '',
+      date: parsedDate,
+      note: json['note'] as String? ?? '',
+    );
+  }
+
+  /// Convenient helper to format the date as day/month/year
+  String get formattedDate => '${date.day}/${date.month}/${date.year}';
+
+  /// Convenient helper to format amount in Taka currency format
+  String get formattedAmount => '৳ ${amount.toStringAsFixed(2)}';
+}
