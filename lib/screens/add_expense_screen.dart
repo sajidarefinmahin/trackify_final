@@ -58,3 +58,63 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     final expense = Expense(
       amount: amount,
       category: selectedCategory,
+      date: selectedDate,
+      note: noteController.text,
+    );
+
+    await widget.onAddExpense(expense);
+
+    amountController.clear();
+    noteController.clear();
+
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Expense added successfully'),
+      ),
+    );
+
+    widget.onNavigation(0);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+        title: const Text('Add Expense'),
+        centerTitle: true,
+      ),
+
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            const Center(
+              child: CircleAvatar(
+                radius: 40,
+                backgroundColor: Color(0xFFE8F5E9),
+                child: Icon(
+                  Icons.money_off,
+                  size: 40,
+                  color: Colors.green,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+            const Text(
+              'Amount',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 8),
+
+            TextField(
