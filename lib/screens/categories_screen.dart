@@ -33,3 +33,28 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+        title: const Text('Categories'),
+        centerTitle: true,
+      ),
+
+      body: ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: expenseCategories.length,
+        itemBuilder: (context, index) {
+          final category = expenseCategories[index];
+
+          return Card(
+            margin: const EdgeInsets.only(bottom: 12),
+            child: ListTile(
+              leading: CircleAvatar(
+                backgroundColor: Colors.green.shade100,
+                child: Icon(
+                  getCategoryIcon(category),
+                  color: Colors.green,
+                ),
+              ),
+              title: Text(
