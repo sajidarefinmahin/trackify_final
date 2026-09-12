@@ -58,3 +58,24 @@ class CategoriesScreen extends StatelessWidget {
                 ),
               ),
               title: Text(
+                category,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              trailing: const Icon(
+                Icons.arrow_forward_ios,
+                size: 16,
+              ),
+            ),
+          );
+        },
+      ),
+
+      bottomNavigationBar: BottomNav(
+        currentIndex: 3,
+        onTap: onNavigation,
+      ),
+    );
+  }
+}
