@@ -58,3 +58,63 @@ class AppStart extends StatefulWidget {
 
   const AppStart({
     super.key,
+    this.userId,
+  });
+
+  @override
+  State<AppStart> createState() => _AppStartState();
+}
+
+class _AppStartState extends State<AppStart> {
+  final List<Expense> expenses = [];
+  final List<Income> incomes = [];
+
+  int currentIndex = 0;
+  bool showSplash = true;
+  bool isLoadingData = true;
+
+  StreamSubscription<User?>? _authSubscription;
+  String? _loadedUid;
+
+  bool get _isFirebaseAvailable {
+    try {
+      return Firebase.apps.isNotEmpty;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  String? get _currentUid {
+    if (widget.userId != null && widget.userId!.isNotEmpty) {
+      return widget.userId;
+    }
+    if (_loadedUid != null && _loadedUid!.isNotEmpty) {
+      return _loadedUid;
+    }
+    if (_isFirebaseAvailable) {
+      try {
+        final user = FirebaseAuth.instance.currentUser;
+        if (user != null && user.uid.isNotEmpty) {
+          return user.uid;
+        }
+      } catch (e) {
+        debugPrint('Error getting currentUser: $e');
+      }
+      return null;
+    } else {
+      // Test environment without Firebase
+      return 'test_user';
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    final initialUid = _currentUid;
+    if (initialUid != null && initialUid.isNotEmpty) {
+      _loadedUid = initialUid;
+      _loadSavedData(initialUid);
+    } else if (!_isFirebaseAvailable) {
+      _loadedUid = 'test_user';
+      _loadSavedData('test_user');
