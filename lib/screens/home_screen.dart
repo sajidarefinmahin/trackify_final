@@ -208,3 +208,53 @@ class HomeScreen extends StatelessWidget {
                 const Text(
                   'Recent Transactions',
                   style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                if (expenses.isNotEmpty)
+                  TextButton(
+                    onPressed: () => onNavigation(2),
+                    child: const Text(
+                      'View All',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+
+            const SizedBox(height: 12),
+
+            if (expenses.isEmpty)
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 40),
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 36,
+                        backgroundColor: Colors.green.shade50,
+                        child: Icon(
+                          Icons.receipt_long_outlined,
+                          size: 36,
+                          color: Colors.green.shade400,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      const Text(
+                        'No expenses yet',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Tap the + button to add your first expense',
+                        style: TextStyle(
+                          color: Colors.grey.shade500,
+                          fontSize: 13,
