@@ -158,3 +158,53 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
+                  Text(
+                    '৳ ${balance.toStringAsFixed(2)}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Income & Expense
+            Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    onTap: () => onNavigation(4),
+                    child: _infoCard(
+                      'Income',
+                      '৳ ${totalIncome.toStringAsFixed(2)}',
+                      Colors.blue,
+                      Icons.arrow_downward,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _infoCard(
+                    'Expense',
+                    '৳ ${totalExpense.toStringAsFixed(2)}',
+                    Colors.red,
+                    Icons.arrow_upward,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 25),
+
+            // Recent Transactions Header
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Recent Transactions',
+                  style: TextStyle(
