@@ -68,3 +68,33 @@ class HistoryScreen extends StatelessWidget {
                         backgroundColor: Colors.red.shade50,
                         child: const Icon(
                           Icons.arrow_upward,
+                          color: Colors.red,
+                        ),
+                      ),
+                      title: Text(
+                        item.category,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        '${item.date.day}/${item.date.month}/${item.date.year}',
+                      ),
+                      trailing: Text(
+                        '- ৳ ${item.amount.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  );
+                } else {
+                  final income = item as Income;
+                  return Card(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.green.shade50,
+                        child: const Icon(
+                          Icons.arrow_downward,
