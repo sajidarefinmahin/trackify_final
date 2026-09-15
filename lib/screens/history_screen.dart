@@ -98,3 +98,35 @@ class HistoryScreen extends StatelessWidget {
                         backgroundColor: Colors.green.shade50,
                         child: const Icon(
                           Icons.arrow_downward,
+                          color: Colors.green,
+                        ),
+                      ),
+                      title: Text(
+                        income.source,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        '${income.date.day}/${income.date.month}/${income.date.year}',
+                      ),
+                      trailing: Text(
+                        '+ ৳ ${income.amount.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
+
+      bottomNavigationBar: BottomNav(
+        currentIndex: 2,
+        onTap: onNavigation,
+      ),
+    );
+  }
+}
