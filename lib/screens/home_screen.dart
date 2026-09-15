@@ -258,3 +258,53 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.grey.shade500,
                           fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+            ...expenses.reversed.take(5).map(
+              (expense) => Card(
+                margin: const EdgeInsets.only(bottom: 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                elevation: 1,
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.green.shade100,
+                    child: Icon(
+                      _getCategoryIcon(expense.category),
+                      color: Colors.green.shade800,
+                    ),
+                  ),
+                  title: Text(
+                    expense.category,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${expense.date.day}/${expense.date.month}/${expense.date.year}',
+                        style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontSize: 13,
+                        ),
+                      ),
+                      if (expense.note.trim().isNotEmpty)
+                        Text(
+                          expense.note,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.grey.shade700,
+                            fontSize: 12,
+                          ),
+                        ),
+                    ],
+                  ),
