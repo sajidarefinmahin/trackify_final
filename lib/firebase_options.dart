@@ -33,3 +33,36 @@ class DefaultFirebaseOptions {
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.windows:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.linux:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      default:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions are not supported for this platform.',
+        );
+    }
+  }
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCM-k0xZrkJKs0q7ko1UpcmcIqpQEqRAGU',
+    appId: '1:146468732220:web:8bd821c95697dfb0bfb239',
+    messagingSenderId: '146468732220',
+    projectId: 'trackify-sd',
+    authDomain: 'trackify-sd.firebaseapp.com',
+    storageBucket: 'trackify-sd.firebasestorage.app',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyCM-k0xZrkJKs0q7ko1UpcmcIqpQEqRAGU',
+    appId: '1:146468732220:android:f7116cf7c7df2079bfb239',
+    messagingSenderId: '146468732220',
+    projectId: 'trackify-sd',
+    storageBucket: 'trackify-sd.firebasestorage.app',
+  );
+}
