@@ -38,3 +38,38 @@ class StatisticsScreen extends StatelessWidget {
   }
 
   double categoryTotal(String category) {
+    double total = 0;
+
+    for (Expense expense in expenses) {
+      if (expense.category == category) {
+        total += expense.amount;
+      }
+    }
+
+    return total;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final List<String> categories = [
+      'Food',
+      'Transport',
+      'Shopping',
+      'Bills',
+      'Entertainment',
+      'Health',
+      'Education',
+      'Other',
+    ];
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Statistics'),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
