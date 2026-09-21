@@ -108,3 +108,53 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
               size: 50,
               color: Colors.green,
             ),
+            const SizedBox(height: 20),
+            const Text(
+              'Amount',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            TextField(
+              controller: amountController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                prefixText: '৳ ',
+                hintText: 'Enter amount',
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Income Source',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<String>(
+              initialValue: selectedSource,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+              items: incomeSources.map((source) {
+                return DropdownMenuItem(
+                  value: source,
+                  child: Text(source),
+                );
+              }).toList(),
+              onChanged: (value) {
+                if (value != null) {
+                  setState(() {
+                    selectedSource = value;
+                  });
+                }
+              },
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Date',
+              style: TextStyle(
