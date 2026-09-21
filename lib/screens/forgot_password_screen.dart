@@ -73,3 +73,46 @@ class _ForgotPasswordScreenState
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(
+              Icons.lock_reset,
+              size: 70,
+              color: Colors.green,
+            ),
+
+            const SizedBox(height: 20),
+
+            const Text(
+              'Reset Password',
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 25),
+
+            TextField(
+              controller: emailController,
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
+                labelText: 'Email',
+                border: OutlineInputBorder(),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: loading ? null : resetPassword,
+                child: Text(
+                  loading ? 'Sending...' : 'Send Reset Email',
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
