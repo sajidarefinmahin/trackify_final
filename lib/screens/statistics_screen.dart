@@ -73,3 +73,38 @@ class StatisticsScreen extends StatelessWidget {
             Row(
               children: [
                 Expanded(
+                  child: infoCard(
+                    'Income',
+                    '৳ ${totalIncome.toStringAsFixed(2)}',
+                    Colors.green,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: infoCard(
+                    'Expense',
+                    '৳ ${totalExpense.toStringAsFixed(2)}',
+                    Colors.red,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            infoCard(
+              'Balance',
+              '৳ ${balance.toStringAsFixed(2)}',
+              Colors.blue,
+            ),
+            const SizedBox(height: 25),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Expense by Category',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            ...categories.map((category) {
