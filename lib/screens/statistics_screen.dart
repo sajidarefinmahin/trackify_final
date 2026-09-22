@@ -108,3 +108,33 @@ class StatisticsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             ...categories.map((category) {
+              return Card(
+                child: ListTile(
+                  title: Text(category),
+                  trailing: Text(
+                    '৳ ${categoryTotal(category).toStringAsFixed(2)}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget infoCard(
+    String title,
+    String value,
+    Color color,
+  ) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Text(
+              title,
