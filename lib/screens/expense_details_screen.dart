@@ -28,3 +28,33 @@ class ExpenseDetailsScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               '৳ ${expense.amount.toStringAsFixed(2)}',
+              style: const TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+              ),
+            ),
+            const SizedBox(height: 30),
+            detailRow('Category', expense.category),
+            detailRow(
+              'Date',
+              '${expense.date.day}/${expense.date.month}/${expense.date.year}',
+            ),
+            detailRow(
+              'Note',
+              expense.note.isEmpty ? 'No note' : expense.note,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget detailRow(String title, String value) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
