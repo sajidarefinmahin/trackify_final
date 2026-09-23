@@ -23,3 +23,25 @@ class AuthGate extends StatelessWidget {
             body: Center(
               child: CircularProgressIndicator(),
             ),
+          );
+        }
+
+        if (snapshot.hasData) {
+          final user = snapshot.data;
+          final providedHome = home;
+          if (providedHome != null && providedHome is! AppStart) {
+            return providedHome;
+          }
+          return AppStart(
+            key: ValueKey(user?.uid ?? 'authenticated_user'),
+            userId: user?.uid,
+          );
+        }
+
+        return LoginScreen(
+          onLoginSuccess: () {},
+        );
+      },
+    );
+  }
+}
