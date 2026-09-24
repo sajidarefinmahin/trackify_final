@@ -23,3 +23,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           const CircleAvatar(
             radius: 45,
+            child: Icon(
+              Icons.person,
+              size: 50,
+            ),
+          ),
+          const SizedBox(height: 15),
+          const Center(
+            child: Text(
+              'Trackify User',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.person_outline),
+              title: const Text('Profile'),
