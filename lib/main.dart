@@ -118,3 +118,103 @@ class _AppStartState extends State<AppStart> {
     } else if (!_isFirebaseAvailable) {
       _loadedUid = 'test_user';
       _loadSavedData('test_user');
+    }
+
+    if (_isFirebaseAvailable) {
+      // Listen for authenticated user changes
+      _authSubscription =
+          FirebaseAuth.instance.authStateChanges().listen((user) {
+        if (user != null && user.uid.isNotEmpty) {
+          if (_loadedUid != user.uid) {
+            _loadedUid = user.uid;
+            _loadSavedData(user.uid);
+          }
+        }
+      });
+    }
+
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) {
+        setState(() {
+          showSplash = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _authSubscription?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _loadSavedData(String uid) async {
+    if (_isFirebaseAvailable && uid.isNotEmpty && uid != 'test_user') {
+      try {
+        debugPrint('Loading expenses from Firestore for uid: $uid');
+        final expenseSnap = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .collection('expenses')
+            .get();
+
+        final List<Expense> loadedExpenses = [];
+        for (final doc in expenseSnap.docs) {
+          loadedExpenses.add(Expense.fromJson(doc.data()));
+        }
+
+        debugPrint('Loading incomes from Firestore for uid: $uid');
+        final incomeSnap = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .collection('incomes')
+            .get();
+
+        final List<Income> loadedIncomes = [];
+        for (final doc in incomeSnap.docs) {
+          loadedIncomes.add(Income.fromJson(doc.data()));
+        }
+
+        debugPrint(
+            'Loaded from Firestore: ${loadedExpenses.length} expenses, ${loadedIncomes.length} incomes');
+
+        if (mounted) {
+          setState(() {
+            expenses.clear();
+            expenses.addAll(loadedExpenses);
+            incomes.clear();
+            incomes.addAll(loadedIncomes);
+            isLoadingData = false;
+          });
+        }
+        return;
+      } catch (e) {
+        debugPrint('Error loading from Firestore: $e');
+      }
+    }
+
+    // Local SharedPreferences fallback for test environment
+    try {
+      debugPrint('Loading expenses for key: ${uid}_expenses');
+      debugPrint('Loading incomes for key: ${uid}_incomes');
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.reload();
+      final expensesJson = prefs.getString('${uid}_expenses');
+      final incomesJson = prefs.getString('${uid}_incomes');
+
+      final List<Expense> loadedExpenses = [];
+      if (expensesJson != null && expensesJson.isNotEmpty) {
+        final List<dynamic> decoded = jsonDecode(expensesJson);
+        for (final item in decoded) {
+          if (item is Map) {
+            loadedExpenses.add(Expense.fromJson(Map<String, dynamic>.from(item)));
+          }
+        }
+      }
+
+      final List<Income> loadedIncomes = [];
+      if (incomesJson != null && incomesJson.isNotEmpty) {
+        final List<dynamic> decoded = jsonDecode(incomesJson);
+        for (final item in decoded) {
+          if (item is Map) {
