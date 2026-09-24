@@ -43,3 +43,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: ListTile(
               leading: const Icon(Icons.person_outline),
               title: const Text('Profile'),
+              subtitle: const Text('Trackify User'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+            ),
+          ),
+          Card(
+            child: SwitchListTile(
+              secondary: const Icon(Icons.notifications_outlined),
+              title: const Text('Notifications'),
+              value: notifications,
+              onChanged: (value) {
+                setState(() {
+                  notifications = value;
+                });
+              },
+            ),
+          ),
+          Card(
+            child: SwitchListTile(
+              secondary: const Icon(Icons.dark_mode_outlined),
+              title: const Text('Dark Mode'),
