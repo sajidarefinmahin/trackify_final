@@ -63,3 +63,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: SwitchListTile(
               secondary: const Icon(Icons.dark_mode_outlined),
               title: const Text('Dark Mode'),
+              value: darkMode,
+              onChanged: (value) {
+                setState(() {
+                  darkMode = value;
+                });
+              },
+            ),
+          ),
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.info_outline),
+              title: const Text('About'),
+              subtitle: const Text('Trackify App'),
+            ),
+          ),
