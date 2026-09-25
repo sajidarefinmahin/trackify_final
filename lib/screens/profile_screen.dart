@@ -91,5 +91,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-
-// Profile styling optimized
