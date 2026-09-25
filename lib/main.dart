@@ -308,3 +308,116 @@ class _AppStartState extends State<AppStart> {
             .add(income.toJson());
         debugPrint('Successfully saved income to Firestore');
       } catch (e) {
+        debugPrint('Error saving income to Firestore: $e');
+      }
+    } else {
+      await _saveIncomesLocally();
+    }
+  }
+
+  void changePage(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+
+  Widget getCurrentPage() {
+    switch (currentIndex) {
+      case 0:
+        return HomeScreen(
+          expenses: expenses,
+          incomes: incomes,
+          onNavigation: changePage,
+        );
+
+      case 1:
+        return AddExpenseScreen(
+          onAddExpense: addExpense,
+          onNavigation: changePage,
+        );
+
+      case 2:
+        return HistoryScreen(
+          expenses: expenses,
+          incomes: incomes,
+          onNavigation: changePage,
+        );
+
+      case 3:
+        return CategoriesScreen(
+          onNavigation: changePage,
+        );
+
+      case 4:
+        return AddIncomeScreen(
+          onAddIncome: addIncome,
+          onNavigation: changePage,
+        );
+
+      case 5:
+        return StatisticsScreen(
+          expenses: expenses,
+          incomes: incomes,
+        );
+
+      case 6:
+        return const ProfileScreen();
+
+      default:
+        return HomeScreen(
+          expenses: expenses,
+          incomes: incomes,
+          onNavigation: changePage,
+        );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (showSplash || isLoadingData) {
+      return const SplashContent();
+    }
+
+    return getCurrentPage();
+  }
+}
+
+class SplashContent extends StatelessWidget {
+  const SplashContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.green,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(
+              Icons.account_balance_wallet,
+              size: 80,
+              color: Colors.white,
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Trackify',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Track your money easily',
+              style: TextStyle(
+                color: Colors.white70,
+                fontSize: 16,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
