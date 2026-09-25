@@ -218,3 +218,93 @@ class _AppStartState extends State<AppStart> {
         final List<dynamic> decoded = jsonDecode(incomesJson);
         for (final item in decoded) {
           if (item is Map) {
+            loadedIncomes.add(Income.fromJson(Map<String, dynamic>.from(item)));
+          }
+        }
+      }
+
+      debugPrint('Loaded expenses: ${loadedExpenses.length}');
+      debugPrint('Loaded incomes: ${loadedIncomes.length}');
+
+      if (mounted) {
+        setState(() {
+          expenses.clear();
+          expenses.addAll(loadedExpenses);
+          incomes.clear();
+          incomes.addAll(loadedIncomes);
+          isLoadingData = false;
+        });
+      }
+    } catch (e) {
+      debugPrint('Error loading saved data: $e');
+      if (mounted) {
+        setState(() {
+          isLoadingData = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _saveExpensesLocally() async {
+    final uid = _currentUid;
+    if (uid == null || uid.isEmpty) return;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String data = jsonEncode(expenses.map((e) => e.toJson()).toList());
+      await prefs.setString('${uid}_expenses', data);
+    } catch (e) {
+      debugPrint('Error saving expenses locally: $e');
+    }
+  }
+
+  Future<void> _saveIncomesLocally() async {
+    final uid = _currentUid;
+    if (uid == null || uid.isEmpty) return;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String data = jsonEncode(incomes.map((i) => i.toJson()).toList());
+      await prefs.setString('${uid}_incomes', data);
+    } catch (e) {
+      debugPrint('Error saving incomes locally: $e');
+    }
+  }
+
+  Future<void> addExpense(Expense expense) async {
+    setState(() {
+      expenses.add(expense);
+    });
+
+    final uid = _currentUid;
+    if (_isFirebaseAvailable && uid != null && uid.isNotEmpty && uid != 'test_user') {
+      try {
+        debugPrint('Saving expense to Firestore: users/$uid/expenses');
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .collection('expenses')
+            .add(expense.toJson());
+        debugPrint('Successfully saved expense to Firestore');
+      } catch (e) {
+        debugPrint('Error saving expense to Firestore: $e');
+      }
+    } else {
+      await _saveExpensesLocally();
+    }
+  }
+
+  Future<void> addIncome(Income income) async {
+    setState(() {
+      incomes.add(income);
+    });
+
+    final uid = _currentUid;
+    if (_isFirebaseAvailable && uid != null && uid.isNotEmpty && uid != 'test_user') {
+      try {
+        debugPrint('Saving income to Firestore: users/$uid/incomes');
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .collection('incomes')
+            .add(income.toJson());
+        debugPrint('Successfully saved income to Firestore');
+      } catch (e) {
