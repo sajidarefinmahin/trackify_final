@@ -91,3 +91,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
+
+// Profile auth integration complete
