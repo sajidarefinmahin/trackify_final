@@ -92,4 +92,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-// Profile auth integration complete
+// Profile styling optimized
