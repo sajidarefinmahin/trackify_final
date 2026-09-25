@@ -118,3 +118,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
             ),
+
+            const SizedBox(height: 20),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: loading ? null : register,
+                child: Text(
+                  loading ? 'Creating...' : 'Create Account',
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
