@@ -78,3 +78,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               subtitle: const Text('Trackify App'),
             ),
           ),
+          const SizedBox(height: 20),
+          ElevatedButton.icon(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+            },
+            icon: const Icon(Icons.logout),
+            label: const Text('Logout'),
+          ),
+        ],
+      ),
+    );
+  }
+}
